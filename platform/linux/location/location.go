@@ -61,7 +61,7 @@ func NewLocationWorker(ctx context.Context) (workers.EntityWorker, error) {
 	}
 
 	// Load the worker preferences.
-	defaultPrefs := defaultLocationWorkerPreferences()
+	defaultPrefs := &workers.CommonWorkerPrefs{}
 	var err error
 	worker.prefs, err = workers.LoadWorkerPreferences(preferencesID, defaultPrefs)
 	if err != nil {
@@ -192,8 +192,4 @@ func (w *locationWorker) getLocationProperty(path, prop string) (float64, error)
 	}
 
 	return value, nil
-}
-
-func defaultLocationWorkerPreferences() *workers.CommonWorkerPrefs {
-	return &workers.CommonWorkerPrefs{}
 }
