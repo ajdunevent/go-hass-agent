@@ -83,25 +83,9 @@ jobs:
         run: |
           go run github.com/goreleaser/nfpm/v2/cmd/nfpm@latest package --packager deb --config .nfpm.yaml --target dist
 
-      - name: Install cosign
-        id: cosign_install
-        uses: sigstore/cosign-installer@cad07c2e89fa2edd6e2d7bab4c1aa38e53f76003 # v3
-
-      - name: Sign artifacts with cosign
-        id: cosign_sign
-        shell: bash
-        run: |
-          shopt -s nullglob
-          for artifact in dist/*.deb; do
-            echo "Signing ${artifact}"
-            cosign --verbose=true sign-blob --yes --key cosign.key --bundle=${artifact}.sig ${artifact}
-          done
-        env:
-          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
-
       - name: Upload release artifacts
         id: upload_release
         run: |
-          gh release upload ${{ env.APPVERSION }} dist/*.{deb,sig}
+          gh release upload ${{ env.APPVERSION }} dist/*.deb
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
