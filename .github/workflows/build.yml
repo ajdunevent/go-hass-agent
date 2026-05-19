@@ -135,7 +135,7 @@ jobs:
 
       - name: Build binary
         run: |
-          go build -ldflags="-w -s -X github.com/joshuar/go-hass-agent/config.AppVersion=${{ env.APPVERSION }}" -o dist/go-hass-agent
+          go build -ldflags="-w -s -X github.com/ajdunevent/go-hass-agent/config.AppVersion=${{ env.APPVERSION }}" -o dist/go-hass-agent
         env:
           CGO_ENABLED: 0
           GOARCH: ${{matrix.goarch}}
